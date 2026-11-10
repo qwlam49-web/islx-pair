@@ -163,7 +163,7 @@ footer{
     <button id="b">توليد كود الربط</button>
 
     <div id="out"><div id="code"></div></div>
-    <div id="msg">واجهة الموقع جاهزة، جاري تجهيز اتصال السيرفر.</div>
+    <div id="msg">جاري الاتصال بالسيرفر.</div>
   </div>
 
   <ol class="steps">
@@ -190,11 +190,7 @@ footer{
 <script>
 const $ = id => document.getElementById(id);
 
-/*
-  هنضيف رابط السيرفر هنا بعد تجهيز الاتصال.
-  سيب القيمة فاضية دلوقتي.
-*/
-const API_BASE = "";
+const API_BASE = "https://bon-bridge-colon-forty.trycloudflare.com";
 
 async function status(){
   if(!API_BASE) return;
@@ -228,7 +224,7 @@ setInterval(status, 6000);
 
 $("b").onclick = async () => {
   if(!API_BASE){
-    $("msg").textContent = "السيرفر لسه مش متوصل. هنفعّل التوليد بعد إعداد الاتصال.";
+    $("msg").textContent = "السيرفر لسه مش متوصل.";
     return;
   }
 
