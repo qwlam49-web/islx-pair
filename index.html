@@ -1,48 +1,316 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ISLΞX AI | ربط واتساب</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ISLΞX AI - Pair Code</title>
+<link rel="icon" href="./bot.jpg">
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  background: #080b12;
-  color: white;
-  font-family: Arial, sans-serif;
-  padding: 20px;
+:root{
+  --bg:#09090b;--panel:#111114;--line:#26262c;
+  --txt:#fafafa;--mut:#8b8b96;--acc:#22d3ee;
+  --ok:#34d399;--bad:#fb7185
 }
-.card {
-  width: 100%;
-  max-width: 420px;
-  padding: 30px 22px;
-  border: 1px solid #263246;
-  border-radius: 18px;
-  background: #101725;
-  text-align: center;
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;display:flex;flex-direction:column;
+  background:var(--bg);color:var(--txt);
+  font-family:system-ui,"Segoe UI",Tahoma,sans-serif;line-height:1.7;
+  background-image:radial-gradient(600px 300px at 50% -80px,#22d3ee22,transparent)
 }
-h1 { letter-spacing: 2px; }
-p { color: #aab6c8; line-height: 1.8; }
-.status {
-  display: inline-block;
-  padding: 8px 14px;
-  border-radius: 20px;
-  background: #1b2b25;
-  color: #75e0a1;
+header{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 22px;border-bottom:1px solid var(--line)
+}
+.brand{
+  display:flex;align-items:center;gap:10px;font-weight:800;
+  font-size:19px;letter-spacing:.5px;color:var(--txt);text-decoration:none
+}
+.brand img{
+  width:36px;height:36px;border-radius:9px;object-fit:cover;
+  border:1px solid var(--line)
+}
+.brand i{color:var(--acc);font-style:normal}
+nav a{
+  color:var(--mut);text-decoration:none;font-size:14px;
+  padding:6px 12px;border:1px solid var(--line);border-radius:99px
+}
+main{
+  flex:1;width:min(100%,520px);margin:0 auto;
+  padding:44px 18px 30px;text-align:center
+}
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--line);background:var(--panel);
+  color:var(--mut);padding:5px 14px;border-radius:99px;font-size:13px
+}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--bad)}
+.tag.on .dot{background:var(--ok);box-shadow:0 0 8px var(--ok)}
+h1{
+  font-size:clamp(38px,11vw,58px);margin:18px 0 8px;
+  letter-spacing:1px;font-weight:900
+}
+.sub{color:var(--mut);margin:0 0 26px}
+.card{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:18px;padding:20px;text-align:right
+}
+label{font-size:14px;color:var(--mut)}
+.field{
+  display:flex;direction:ltr;margin-top:8px;
+  border:1px solid var(--line);border-radius:12px;
+  overflow:hidden;background:#0b0b0e
+}
+.field span{
+  padding:0 16px;display:grid;place-items:center;
+  color:var(--mut);border-right:1px solid var(--line);font-weight:700
+}
+.field input{
+  flex:1;min-width:0;border:0;background:transparent;
+  color:var(--txt);padding:15px 12px;font-size:17px;outline:none
+}
+.field:focus-within{border-color:var(--acc)}
+#pw{
+  width:100%;margin-top:10px;border:1px solid var(--line);
+  border-radius:12px;background:#0b0b0e;color:var(--txt);
+  padding:14px;font-size:16px;text-align:center;display:none
+}
+.hint{font-size:12.5px;color:var(--mut);margin:8px 2px 0}
+button{
+  width:100%;margin-top:16px;padding:15px;border:0;
+  border-radius:12px;background:var(--txt);color:#09090b;
+  font-size:16px;font-weight:800;cursor:pointer;font-family:inherit
+}
+button:disabled{opacity:.55;cursor:not-allowed}
+#out{
+  display:none;margin-top:16px;border:1px dashed var(--acc);
+  border-radius:14px;padding:16px;text-align:center
+}
+#code{
+  font-size:clamp(30px,9vw,42px);font-weight:900;
+  letter-spacing:6px;direction:ltr;color:var(--acc);cursor:pointer
+}
+#msg{
+  margin-top:8px;font-size:14px;color:var(--mut);
+  text-align:center;min-height:20px
+}
+.steps{
+  list-style:none;padding:0;margin:26px 0 0;text-align:right;
+  display:grid;gap:10px
+}
+.steps li{
+  display:flex;gap:14px;align-items:center;background:var(--panel);
+  border:1px solid var(--line);border-radius:12px;padding:12px 14px
+}
+.steps b{color:var(--acc);font-size:15px;letter-spacing:1px;min-width:26px}
+details{
+  margin-top:22px;text-align:right;background:var(--panel);
+  border:1px solid var(--line);border-radius:14px;padding:12px 16px
+}
+summary{cursor:pointer;font-weight:700}
+.cat{margin:14px 0 6px;color:var(--acc);font-size:14px;font-weight:700}
+.cmd{
+  display:flex;justify-content:space-between;gap:10px;
+  padding:6px 0;border-bottom:1px solid var(--line);font-size:14px
+}
+.cmd code{color:var(--txt);font-weight:700}
+.cmd small{color:var(--mut);text-align:left}
+footer{
+  text-align:center;color:var(--mut);font-size:13px;
+  padding:20px;border-top:1px solid var(--line)
+}
+@media(max-width:420px){
+  header{padding:14px}
+  main{padding-top:34px}
 }
 </style>
 </head>
 <body>
-<main class="card">
-  <h1>ISLΞX AI</h1>
-  <p>نظام ربط واتساب</p>
-  <p>الموقع جاهز للتجهيز لاستقبال طلبات ربط الأجهزة.</p>
-  <span class="status">الموقع متاح</span>
+
+<header>
+  <a class="brand" href="./">
+    <img src="./bot.jpg" alt="ISLΞX AI">
+    <span id="b1">ISLAM</span><i>.</i>
+  </a>
+  <nav><a href="./">الرئيسية</a></nav>
+</header>
+
+<main>
+  <span class="tag" id="tag">
+    <i class="dot"></i><span id="st">WhatsApp Bot</span>
+  </span>
+
+  <h1 id="b2">ISLAM MD</h1>
+
+  <p class="sub">
+    أدخل رقم هاتفك بكود الدولة، واحصل على كود الربط لتشغيل البوت.<br>
+    بدون QR، بدون تعقيد.
+  </p>
+
+  <div class="card">
+    <label for="n">رقم الهاتف</label>
+    <div class="field">
+      <span>+</span>
+      <input id="n" type="tel" inputmode="numeric"
+        placeholder="201012345678" autocomplete="off">
+    </div>
+
+    <p class="hint">أدخل الرقم مع كود الدولة، بدون صفر أو +</p>
+
+    <input id="pw" type="password" placeholder="باسوورد الموقع">
+
+    <button id="b">توليد كود الربط</button>
+
+    <div id="out"><div id="code"></div></div>
+    <div id="msg">واجهة الموقع جاهزة، جاري تجهيز اتصال السيرفر.</div>
+  </div>
+
+  <ol class="steps">
+    <li><b>01</b>افتح واتساب على موبايلك</li>
+    <li><b>02</b>ادخل على الأجهزة المرتبطة</li>
+    <li><b>03</b>اضغط على ربط جهاز</li>
+    <li><b>04</b>اختر الربط برقم الهاتف</li>
+    <li><b>05</b>اكتب الكود الظاهر أعلاه</li>
+  </ol>
+
+  <details>
+    <summary>📜 أوامر البوت</summary>
+    <div id="cmds" style="color:var(--mut)">
+      سيتم تحميل الأوامر بعد توصيل السيرفر.
+    </div>
+  </details>
 </main>
+
+<footer>
+  <span id="b3">ISLAM MD</span> © 2026 — Pair Code Interface — تطوير
+  <b id="dev">إسلام</b>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+/*
+  هنضيف رابط السيرفر هنا بعد تجهيز الاتصال.
+  سيب القيمة فاضية دلوقتي.
+*/
+const API_BASE = "";
+
+async function status(){
+  if(!API_BASE) return;
+
+  try{
+    const response = await fetch(API_BASE + "/api/status");
+    const d = await response.json();
+
+    $("tag").className = "tag" + (d.connected ? " on" : "");
+    $("st").textContent = d.connected ? "متصل ✅" : "غير متصل";
+
+    $("pw").style.display = d.passwordRequired ? "block" : "none";
+    $("dev").textContent = d.developer || "إسلام";
+
+    if(d.brand){
+      $("b2").textContent = d.brand;
+      $("b3").textContent = d.brand;
+      $("b1").textContent = d.brand.split(" ")[0];
+    }
+
+    if(d.botNumber && !$("n").value){
+      $("n").value = d.botNumber;
+    }
+  }catch{
+    $("st").textContent = "تعذر الاتصال بالسيرفر";
+  }
+}
+
+status();
+setInterval(status, 6000);
+
+$("b").onclick = async () => {
+  if(!API_BASE){
+    $("msg").textContent = "السيرفر لسه مش متوصل. هنفعّل التوليد بعد إعداد الاتصال.";
+    return;
+  }
+
+  $("out").style.display = "none";
+  $("msg").textContent = "جاري التوليد...";
+  $("b").disabled = true;
+
+  try{
+    const r = await fetch(API_BASE + "/pair", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        number: $("n").value,
+        password: $("pw").value
+      })
+    });
+
+    const d = await r.json();
+
+    if(d.code){
+      $("code").textContent = d.code;
+      $("out").style.display = "block";
+      $("msg").textContent = "الكود صالح لدقيقة تقريباً — اضغط عليه للنسخ";
+    }else{
+      $("msg").textContent = d.error || "حصل خطأ أثناء التوليد.";
+    }
+  }catch{
+    $("msg").textContent = "حصلت مشكلة في الاتصال.";
+  }
+
+  $("b").disabled = false;
+};
+
+$("code").onclick = async () => {
+  const t = $("code").textContent;
+  if(!t) return;
+
+  try{
+    await navigator.clipboard.writeText(t.replace("-", ""));
+    $("msg").textContent = "اتنسخ ✅";
+  }catch{
+    $("msg").textContent = "تعذر النسخ تلقائياً.";
+  }
+};
+
+async function loadCommands(){
+  if(!API_BASE) return;
+
+  try{
+    const r = await fetch(API_BASE + "/api/commands");
+    const list = await r.json();
+    const container = $("cmds");
+    container.replaceChildren();
+
+    const cats = {};
+    list.forEach(c => (cats[c.category || "أوامر عامة"] ??= []).push(c));
+
+    Object.entries(cats).forEach(([name, commands]) => {
+      const heading = document.createElement("div");
+      heading.className = "cat";
+      heading.textContent = name;
+      container.appendChild(heading);
+
+      commands.forEach(c => {
+        const line = document.createElement("div");
+        line.className = "cmd";
+
+        const command = document.createElement("code");
+        command.textContent = "." + c.name + (c.admin ? " 👑" : "");
+
+        const description = document.createElement("small");
+        description.textContent = c.desc || "";
+
+        line.append(command, description);
+        container.appendChild(line);
+      });
+    });
+  }catch{}
+}
+
+loadCommands();
+</script>
+
 </body>
 </html>
